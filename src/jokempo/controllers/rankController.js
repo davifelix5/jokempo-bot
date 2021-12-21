@@ -25,35 +25,35 @@ module.exports = {
             return message.channel.send({embed: rankMessages.rankHelp()})
         try {
             const [rows, totalPages] = await rankingServices.getRankingInfo(columnName, page, message.channel.guild.id, ascendentOrdenation)
-            if (!rows) return message.channel.send({embed: messages.announceWarning('Não há usuário nessa página')})
+            if (!rows.length) return message.channel.send({embed: messages.announceWarning('Não há registros no ranking')})
             for (user of rows) {
                 const member = await message.guild.members.fetch(user.userId)
                 user.nickname = member.nickname || member.user.username
                 delete user.userId
             }
             message.channel.send({embed: rankMessages.announceRank(columnName, rows, page, totalPages, ascendentOrdenation, totalCount)})
-                .then(async (msg) => {
+                .then(async (rankMessage) => {
                     if (totalPages === 1)
                         return
                     if (page < totalPages)
-                        await msg.react('⬆️')
+                        await rankMessage.react('⬆️')
                     if (page >= totalPages)
-                        await msg.react('⬇️')
-                    const filter = (reaction, user) => ['⬆️', '⬇️'].includes(reaction.emoji.name)
-                    msg.awaitReactions(filter, {max: 1, time: 300 * 1000, erros:['time']})
+                        await rankMessage.react('⬇️')
+                    const filter = (reaction) => ['⬆️', '⬇️'].includes(reaction.emoji.name)
+                    const THIRTY_SECONDS = 30 * 1000
+                    rankMessage.awaitReactions(filter, {max: 1, time: THIRTY_SECONDS})
                         .then(collected => {
                             const reaction = collected.first()
                             page = reaction.emoji.name == '⬆️' ? page + 1 : page - 1
                             this.rank(message, args, page).catch(() => {
                                 message.channel.send({embed: messages.announceError('Erro ao passar a página do rank')})
                             })
-                            msg.delete().catch(() => {
+                            rankMessage.delete().catch(() => {
                                 message.channel.send({embed: messages.announceError('Erro trocar de página')})
                             })
                         })
-                        .catch(err => {
-                            console.log(err)
-                            message.channel.send({embed: messages.announceError('Erro na troca de página. Tente mais tarde!')})
+                        .catch(() => {
+                            rankMessage.delete()
                         })
                 })
                 .catch(err => {

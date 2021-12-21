@@ -25,8 +25,8 @@ module.exports = {
         }
         const rankKeys = ['wins', 'losses', 'draws', 'refused']
         const mapUser = user => rankKeys.map(key => [columns[key], user[key]].join(': ')).join('\n')
-        const getRankPosition = index => (page - 1) * rankServices.pageSize + index + 1
-        const getRankPositionAsc = index => totalCount - (page - 1) * rankServices.pageSize - index
+        const getRankPosition = index => ((page - 1) * rankServices.pageSize) + (index + 1)
+        const getRankPositionAsc = index => totalCount - ((page - 1) * rankServices.pageSize - index)
         const fields = rank.map((user, index) => {
             return {
                 name: `${asc ? getRankPositionAsc(index) : getRankPosition(index)}º ${user.nickname}`,

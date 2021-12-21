@@ -1,7 +1,7 @@
 const knex = require('../../database/connection')
 
 module.exports = {
-    pageSize: 10,
+    pageSize: 3,
     async countUsers() {
         const [{count}] = await knex('users').count('*')
         return Number(count)
@@ -14,8 +14,8 @@ module.exports = {
 
         const count = await this.countUsers()
         const pages = Math.ceil(count / this.pageSize)
-        if (pages > pages) {
-            return null
+        if (page > pages) {
+            return []
         }
         
         const result = await knex
