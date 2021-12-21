@@ -9,9 +9,9 @@ module.exports = {
         const user = message.author
         const nickname = args.join(' ')
         try {
+            await validators.userExists(message)
             if (!nickname)
                 throw new ArgumentError(`Informe um nickname`)
-            await validators.userExists(message)
             await validators.nicknameExists(nickname)
         } catch (err) {
             if (err instanceof ArgumentError)
