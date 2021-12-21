@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  database:
+    image: "postgres"
+    environment:
+      POSTGRES_DB: "jokempo-app"
+      POSTGRES_HOST: 127.0.0.1
+      POSTGRES_PASSWORD: localdb123
+      POSTGRES_USER: postgres
+    ports:
+      - "8001:5432"
+    volumes:
+      - ./database-data:/var/lib/postgresql/data/
+       
