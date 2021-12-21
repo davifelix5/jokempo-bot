@@ -128,6 +128,7 @@ module.exports = {
 
     aksUnregisterConfirmation: () => {
         return {
+            ...base,
             title: 'Apagar usuário 😢',
             description: 'Ao apagar o seu usuário, todos os seus dados de jogos anteriores',
             fields: [
@@ -179,7 +180,10 @@ module.exports = {
                     name: 'Para ver as opções de ranking',
                     value: '.jokempo rank help'
                 }
-            ]
+            ],
+            footer: {
+                text: 'OBS: Os símbolos < e > não são necessários nos comandos'
+            }
         }
     }
 

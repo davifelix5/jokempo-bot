@@ -48,7 +48,7 @@ module.exports = {
             description: 'Manual para usar o função **.jokempo rank**',
             fields: [
                 {
-                    name: '.jokempo rank *wins* ou *.jokempo rank*',
+                    name: '*.jokempo rank wins* ou *.jokempo rank*',
                     value: 'Mostra os jogadores ordenador por número de vitórias'
                 },
                 {

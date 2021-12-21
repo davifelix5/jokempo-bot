@@ -78,7 +78,7 @@ module.exports = {
                     })
                 else
                     message.channel.send({
-                        embed: messages.announceWarning('Digite **!jokempo unregister** novamente para confirmar ou **!jokempo unregister cancel** para cancelar')
+                        embed: messages.aksUnregisterConfirmation()
                     })
             })
             .catch(err => {
