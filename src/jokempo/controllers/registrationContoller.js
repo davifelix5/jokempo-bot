@@ -71,8 +71,8 @@ module.exports = {
             return
         }
         registrationServices.deleteUser(author)
-            .then(res => {
-                if (res)
+            .then(deleted => {
+                if (deleted)
                     message.channel.send({
                         embed: messages.announceSuccess('Usuário apagado com sucesso!')
                     })

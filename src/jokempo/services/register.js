@@ -42,11 +42,11 @@ module.exports = {
                 await knex('users').where('userId', user.id).update({
                     confirmedUnregistration: 1
                 })
-                return 0
+                return false
             }
             else {
                 await knex('users').where('userId', user.id).del()
-                return 1
+                return true
             }
 
         } catch (err) {
