@@ -102,59 +102,6 @@ module.exports = {
         }
     },
 
-    announceError: (message) => {
-        return {
-            color: '#D05353',
-            title: 'Ocorreu um erro ❌',
-            description: message,
-        }
-    },
-
-    announceWarning: (message) => {
-        return {
-            color: '#D05353',
-            title: 'Atenção ✋',
-            description: message,
-        }
-    },
-
-    announceSuccess: (message) => {
-        return {
-            color: '#00B295',
-            title: 'Operação feita com sucesso ✅',
-            description: message,
-        }
-    },
-
-    aksUnregisterConfirmation: () => {
-        return {
-            ...base,
-            title: 'Apagar usuário 😢',
-            description: 'Ao apagar o seu usuário, todos os seus dados de jogos anteriores',
-            fields: [
-                {
-                    name: '\u200B',
-                    value: '\u200B',
-                    inline: true
-                },
-                {
-                    name: 'Para confirmar',
-                    value: '.jokempo unregister'
-                },
-                {
-                    name: 'Para cancelar a operação',
-                    value: '.jokempo unregister cancel'
-                },
-                {
-                    name: '\u200B',
-                    value: '\u200B',
-                    inline: true
-                },
-            ]
-
-        }
-    },
-
     tutorial: () => {
         return {
             color: '#00B295',
@@ -164,14 +111,6 @@ module.exports = {
             },
             description: 'Lista dos principais comandos para você começar a jogar',
             fields: [
-                {
-                    name: 'Para se registrar',
-                    value: '.jokempo register <nickname>',
-                },
-                {
-                    name: 'Para de desregistrar',
-                    value: '.jokempo unregister',
-                },
                 {
                     name: 'Para desafiar alguém',
                     value: '.jokempo challenge <mencionar adversário> <sua jogada>'

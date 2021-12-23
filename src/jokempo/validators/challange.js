@@ -1,5 +1,5 @@
 const challangeServices = require('../services/challenge')
-const ArgumentError = require('../errors')
+const ArgumentError = require('../../errors')
 
 module.exports = {
 

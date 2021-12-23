@@ -1,8 +1,9 @@
-const ArgumentError = require('../errors')
+const ArgumentError = require('../../errors')
 const challengeServices = require('../services/challenge')
 const validators = require('../validators/challange')
 const registerValidators = require('../validators/register')
-const messages = require('../messages/announces')
+const gameMessages = require('../messages/announces')
+const messages = require('../../messages')
 
 module.exports = {
     
@@ -48,7 +49,7 @@ module.exports = {
         const [user, play] = options
         try {
             await challengeServices.registerChallange(message.author, user, play)
-            message.channel.send({embed: messages.announceChallange(message.author, user)})
+            message.channel.send({embed: gameMessages.announceChallange(message.author, user)})
         } catch (err) {
             if (!err instanceof ArgumentError)
                 console.log('Houve um erro no desafio: ' + err)
@@ -110,12 +111,12 @@ module.exports = {
                 const winningPlay = plays[winnerId]
                 const loosingPlay = plays.find(play => play != winningPlay)
                 message.channel.send({
-                    embed: messages.announceResults(winner, looser, winningPlay, loosingPlay)
+                    embed: gameMessages.announceResults(winner, looser, winningPlay, loosingPlay)
                 })
             }
             else
                 message.channel.send({
-                    embed: messages.announceDraw(challenger, challenged, play)
+                    embed: gameMessages.announceDraw(challenger, challenged, play)
                 })
         } catch (err) {
             message.channel.send({
@@ -145,7 +146,7 @@ module.exports = {
         try {
             await challengeServices.refuseMatch(message.author, challenger)
             const messageSent = await message.channel.send({
-                embed: messages.announceRefuse(challenger, message.author)
+                embed: gameMessages.announceRefuse(challenger, message.author)
             })
             messageSent.react('🐔')
         } catch (err) {
@@ -164,7 +165,7 @@ module.exports = {
             if (!pendingGame)
                 throw new ArgumentError('Não há jogo para cancelar!')
             message.channel.send({
-                embed: messages.announceCancel(message.author, challenged)
+                embed: gameMessages.announceCancel(message.author, challenged)
             })
         } catch (err) {
             if (err instanceof ArgumentError)

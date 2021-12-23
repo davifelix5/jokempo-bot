@@ -1,5 +1,14 @@
+const { useActions } = require('./utils/useActions')
+
+const jokempoMessages = require('./jokempo/messages/announces')
+const authMessages = require('./auth/messages')
+
+const jokempoActions = require('./jokempo/controllers')
+const authActions = require('./auth/controllers')
+
 module.exports = {
-    '.jokempo': require('./jokempo'),
+    '.jokempo': useActions(jokempoActions, jokempoMessages),
+    '.auth': useActions(authActions, authMessages),
     '.sum': {
         index(message, args) {
             const areAllNumbers = args.every(item => !isNaN(item))

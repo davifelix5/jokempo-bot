@@ -1,6 +1,6 @@
-const ArgumentsError = require('../errors')
+const ArgumentsError = require('../../errors')
 const rankingServices = require('../services/ranking')
-const messages = require('../messages/announces')
+const messages = require('../../messages')
 const rankMessages = require('../messages/rank')
 
 module.exports = {

@@ -1,7 +1,8 @@
-const ArgumentError = require('../errors')
+const ArgumentError = require('../../errors')
 const registrationServices = require('../services/register')
 const validators = require('../validators/register')
-const messages = require('../messages/announces')
+const authMessages = require('../messages')
+const messages = require('../../messages')
 
 module.exports = {
 
@@ -78,7 +79,7 @@ module.exports = {
                     })
                 else
                     message.channel.send({
-                        embed: messages.aksUnregisterConfirmation()
+                        embed: authMessages.aksUnregisterConfirmation()
                     })
             })
             .catch(err => {
