@@ -25,7 +25,7 @@
 - Uso básico de Docker para desenvolvimento
 - Consultas mais avançadas no banco de dados
 
-<h2 id="notas">Notas 📝</h2>
+<h2 id="notas">Notas 📋</h2>
 
 - Desde o tempo da criação desse projeto. A API do Discord foi atualizada, havendo a criação dos [slash commands](https://discordjs.guide/interactions/registering-slash-commands.html#guild-commands), uma melhor forma de gerir comandos sem processar todas as mensagens enviadas.
 - Como o projeto foi feito como forma de aprendizado e não para um uso real, o código não incorporou essa atualização, o que está em planos futuros.
@@ -72,7 +72,14 @@
    <img src="https://github.com/davifelix5/jokempo-bot/blob/main/github-assets/rank4.png?raw=true" width="450px"/>
   </p>
  </p>
-   
+ 
+## Todo List 📝
+
+- [ ] Isolar a lógica de registro para um comando separado
+- [ ] Tornar a foreign key do usuário composta a fim de suportar o registro de um mesmo usuário em diferentes servidores
+- [ ] Consertar o erro foreign key quando um usuário tenta cancelar seu registro
+- [ ] Abstrair a lógica paginação
+
 <h2 id="contribuir">Como contribuir 🤝</h2>
 <p>
   <a href="#notas">Voltar para "Notas"</a>
