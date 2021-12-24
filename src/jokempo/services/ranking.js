@@ -1,7 +1,7 @@
 const knex = require('../../database/connection')
 
 module.exports = {
-    pageSize: 1,
+    pageSize: 3,
     async countUsers(guildId) {
         const [{count}] = await knex('users')
             .where({guildId})
