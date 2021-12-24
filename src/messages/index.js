@@ -37,23 +37,15 @@ module.exports = {
             fields: [
                 {
                     name: 'Para se registrar',
-                    value: '.auth register <nickname>',
+                    value: '.auth',
                 },
                 {
-                    name: 'Para de desregistrar',
-                    value: '.auth unregister',
+                    name: 'Para jogar Jokempo',
+                    value: '.jokempo'
                 },
-                {
-                    name: 'Para desafiar alguém',
-                    value: '.jokempo challenge <mencionar adversário> <sua jogada>'
-                },
-                {
-                    name: 'Para ver as opções de ranking',
-                    value: '.jokempo rank help'
-                }
             ],
             footer: {
-                text: 'OBS: Os símbolos < e > não são necessários nos comandos'
+                text: 'Davi Félix ©'
             }
         }
     }

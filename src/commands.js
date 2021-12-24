@@ -1,5 +1,7 @@
 const { useActions } = require('./utils/useActions')
 
+const { tutorial } = require('./messages')
+
 const jokempoMessages = require('./jokempo/messages/announces')
 const authMessages = require('./auth/messages')
 
@@ -9,6 +11,11 @@ const authActions = require('./auth/controllers')
 module.exports = {
     '.jokempo': useActions(jokempoActions, jokempoMessages),
     '.auth': useActions(authActions, authMessages),
+    '.help': {
+        index(message, args) {
+            message.channel.send({ embed: tutorial() })      
+        }
+    },
     '.sum': {
         index(message, args) {
             const areAllNumbers = args.every(item => !isNaN(item))
