@@ -31,6 +31,12 @@
 - Como o projeto foi feito como forma de aprendizado e não para um uso real, o código não incorporou essa atualização, o que está em planos futuros.
 - Para atualizar o projeto, qualquer <a href="#contribuir">contribuição</a> é bem vinda!
 
+## Rodar no seu servidor ⚙️
+
+- Entre nesse link de convite: [Convide o Bot para ser servidor](https://discord.com/oauth2/authorize?client_id=806475125959688213&permissions=413592398912&scope=bot)
+- Selecione o servidor no qual deseja utilizar o bot
+- Digita `.help` para começar a jogar
+
 ## Amostra da aplicação 🚀
 
 - O bot é usado a partir de comandos digitados nos chats em quais ele tem permissão para estar
