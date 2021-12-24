@@ -1,7 +1,7 @@
 const ArgumentError = require('../../errors')
 const challengeServices = require('../services/challenge')
 const validators = require('../validators/challange')
-const registerValidators = require('../validators/register')
+const registerValidators = require('../../auth/validators/register')
 const gameMessages = require('../messages/announces')
 const messages = require('../../messages')
 
@@ -9,23 +9,24 @@ module.exports = {
     
     async challengeValidate(message, args) {
         const options = ['pedra', 'papel', 'tesoura']
+        const guildId = message.channel.guild.id
         
         try {
             
-            const isRegistered = await registerValidators.isRegistered(message.author)
+            const isRegistered = await registerValidators.isRegistered(message.author, guildId)
             if (!isRegistered)  
                 throw new ArgumentError('Você não está cadastrado')
 
             const user = await validators.verifyMentionedUsers(message)
             
-            const isChallangedRegistered = await registerValidators.isRegistered(user)
+            const isChallangedRegistered = await registerValidators.isRegistered(user, guildId)
             if (!isChallangedRegistered)
                 throw new ArgumentError('Quem você tentou desafiar não tem cadastro')
 
             const [, play] = args
             validators.verifyPlays(options, play)
 
-            await validators.hasPendingGames(message)
+            await validators.hasPendingGames(message, guildId)
             
             message.delete()
             
@@ -47,8 +48,9 @@ module.exports = {
         const options = await args
         if (!options) return
         const [user, play] = options
+        const guildId = message.channel.guild.id
         try {
-            await challengeServices.registerChallange(message.author, user, play)
+            await challengeServices.registerChallange(message.author, user, play, guildId)
             message.channel.send({embed: gameMessages.announceChallange(message.author, user)})
         } catch (err) {
             if (!err instanceof ArgumentError)
@@ -61,14 +63,15 @@ module.exports = {
 
     async acceptValidate(message, args) {
         const options = ['pedra', 'papel', 'tesoura']
+        const guildId = message.channel.guild.id
         
         try {
             
-            await registerValidators.isRegistered(message)
+            await registerValidators.isRegistered(message, guildId)
 
             const user = validators.verifyMentionedUsers(message)
             
-            const game = await challengeServices.findPendingGame(user, message.author)
+            const game = await challengeServices.findPendingGame(user, message.author, guildId)
             if (!game)
                 throw new ArgumentError('Não há jogo pare aceitar')
 
@@ -104,8 +107,10 @@ module.exports = {
 
         const winnerId = this.verifyWinner(play1, play2) - 1
         const winner = players[winnerId]
+
+        const guildId = message.channel.guild.id
         try {
-            await challengeServices.registerMatch(challenger, challenged, winner)
+            await challengeServices.registerMatch(challenger, challenged, winner, guildId)
             if (winner) {
                 const looser = players.find(player => player != winner)
                 const winningPlay = plays[winnerId]
@@ -126,8 +131,9 @@ module.exports = {
     },
 
     async refuseValidate(message, args) {
+        const guildId = message.channel.guild.id
         try {
-            await registerValidators.isRegistered(message)
+            await registerValidators.isRegistered(message.author, guildId)
             const user = await validators.verifyMentionedUsers(message)
             return user
         } catch(err) {
@@ -142,9 +148,10 @@ module.exports = {
 
     async refuse(message, args) {
         const challenger = await args
+        const guildId = message.channel.guild.id
         if (!challenger) return
         try {
-            await challengeServices.refuseMatch(message.author, challenger)
+            await challengeServices.refuseMatch(message.author, challenger, guildId)
             const messageSent = await message.channel.send({
                 embed: gameMessages.announceRefuse(challenger, message.author)
             })
@@ -159,8 +166,9 @@ module.exports = {
     },
 
     async cancel(message, args) {
+        const guildId = message.channel.guild.id
         try {
-            const pendingGame = await challengeServices.deletePendingGame(message.author)
+            const pendingGame = await challengeServices.deletePendingGame(message.author, guildId)
             const challenged = await message.guild.members.fetch(pendingGame.challengedId)
             if (!pendingGame)
                 throw new ArgumentError('Não há jogo para cancelar!')

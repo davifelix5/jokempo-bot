@@ -23,8 +23,8 @@ module.exports = {
         }
     },
 
-    async hasPendingGames(message) {
-        const hasPedingGames = await challangeServices.hasPendingGames(message.author)
+    async hasPendingGames(message, guildId) {
+        const hasPedingGames = await challangeServices.hasPendingGames(message.author, guildId)
         if (hasPedingGames)
             throw new ArgumentError(`Você já tem jogos pendentes! Termine-os ou cancele-os antes`)
     },

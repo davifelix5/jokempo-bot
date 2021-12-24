@@ -1,9 +1,11 @@
 const knex = require('../../database/connection')
 
 module.exports = {
-    pageSize: 3,
-    async countUsers() {
-        const [{count}] = await knex('users').count('*')
+    pageSize: 1,
+    async countUsers(guildId) {
+        const [{count}] = await knex('users')
+            .where({guildId})
+            .count('*')
         return Number(count)
     },
     async getRankingInfo(column, page, guildId, ascendentOrdenation) {
@@ -12,7 +14,7 @@ module.exports = {
         if (!columns.includes(column))
             throw new Error('Invalid column to rank')
 
-        const count = await this.countUsers()
+        const count = await this.countUsers(guildId)
         const pages = Math.ceil(count / this.pageSize)
         if (page > pages) {
             return []
@@ -32,7 +34,8 @@ module.exports = {
                 this.on('games.player1_id', '=', 'users.userId').orOn('games.player2_id', '=', 'users.userId')
             })
             .where('users.guildId', '=', guildId)
-            .groupBy('users.userId')
+            .andWhere('games.guildId', '=', guildId)
+            .groupBy(['users.userId', 'users.nickname'])
             .orderBy(column, ordenation)
             .limit(this.pageSize)
             .offset(this.pageSize * (page -1))

@@ -9,11 +9,12 @@ module.exports = {
     async registerValidate(message, args) {
         const user = message.author
         const nickname = args.join(' ')
+        const guildId = message.channel.guild.id
         try {
-            await validators.userExists(message)
+            await validators.userExists(message, guildId)
             if (!nickname)
                 throw new ArgumentError(`Informe um nickname`)
-            await validators.nicknameExists(nickname)
+            await validators.nicknameExists(nickname, guildId)
         } catch (err) {
             if (err instanceof ArgumentError)
                 message.channel.send({
@@ -28,9 +29,10 @@ module.exports = {
 
     async register(message, args) {
         const options = await args
+        const guildId = message.channel.guild.id
         if (!options) return
         const [user, nickname] = options
-        registrationServices.registerUser(user, nickname, message.channel.guild.id)
+        registrationServices.registerUser(user, nickname, guildId)
             .then(res => {
                 message.channel.send({
                     embed: messages.announceSuccess(`Usuário ${user} cadastrado como **${nickname}**`)
@@ -57,8 +59,9 @@ module.exports = {
 
     unregister(message, cancel) {
         const { author } = message
+        const guildId = message.channel.guild.id
         if (cancel) {
-            registrationServices.cancelUnregistration(message.author)
+            registrationServices.cancelUnregistration(message.author, guildId)
                 .then(res => {
                     message.channel.send({
                         embed: messages.announceSuccess('Operação cancelada com sucesso')
@@ -71,7 +74,7 @@ module.exports = {
                 })
             return
         }
-        registrationServices.deleteUser(author)
+        registrationServices.deleteUser(author, guildId)
             .then(deleted => {
                 if (deleted)
                     message.channel.send({

@@ -26,11 +26,11 @@ module.exports = {
             },
             {
                 name: 'Para confirmar',
-                value: '.jokempo unregister'
+                value: '.auth unregister'
             },
             {
                 name: 'Para cancelar a operação',
-                value: '.jokempo unregister cancel'
+                value: '.auth unregister cancel'
             },
             {
                 name: '\u200B',

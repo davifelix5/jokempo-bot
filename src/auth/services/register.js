@@ -2,8 +2,13 @@ const knex = require('../../database/connection')
 
 module.exports = {
 
-    async nicknameExists(nickname) {
-        const [foundUser] = await knex('users').select('*').where('nickname', nickname)
+    async nicknameExists(nickname, guildId) {
+        const [foundUser] = await knex('users')
+        .select('*')
+        .where({
+            'nickname': nickname,
+            'guildId': guildId
+        })
         return !!foundUser
     },
 
@@ -15,14 +20,18 @@ module.exports = {
                 guildId
             })
         } catch (err) {
-            console.log('Erro cadastrando usuário: ' + e)
+            console.log('Erro cadastrando usuário: ' + err)
             throw err
         }
     },
 
-    async isUserRegistered(user) {
+    async isUserRegistered(user, guildId) {
         try {
-            const [foundUser] = await knex('users').where('userId', user.id)
+            const [foundUser] = await knex('users')
+                .where({
+                    'userId': user.id,
+                    'guildId': guildId,
+                })
             return Boolean(foundUser);
         } catch (err) {
             console.log('Erro ao buscar usuário: ' + err)
@@ -30,11 +39,14 @@ module.exports = {
         }
     },
 
-    async deleteUser(user) {
+    async deleteUser(user, guildId) {
         try {
             const [foundUser] = await knex('users')
                 .select('*')
-                .where('userId', user.id)
+                .where({
+                    'userId': user.id,
+                    'guildId': guildId,
+                })
 
             const {confirmedUnregistration} = foundUser
 
@@ -55,10 +67,15 @@ module.exports = {
         }
     },
 
-    async cancelUnregistration(user) {
-        const [foundUser] = await knex('users').select('*').where('userId', user.id)
+    async cancelUnregistration(user, guildId) {
+        const [foundUser] = await knex('users')
+            .select('*')
+            .where({
+                'userId': user.id,
+                'guildId': guildId
+            })
         if (foundUser.confirmedUnregistration) {
-            await knex('users').select('*').where('userId', user.id).update({
+            await foundUser.update({
                 confirmedUnregistration: 0
             })
             return

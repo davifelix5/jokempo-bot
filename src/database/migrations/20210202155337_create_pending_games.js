@@ -6,9 +6,12 @@ exports.up = function(knex) {
 		table.string('challengedId').unsigned().notNullable()
 		table.enu('challengerPlay', ['pedra', 'papel', 'tesoura']).notNullable()
 		table.timestamp('created_at').defaultTo(knex.fn.now())
+		table.string('guildId')
 		
-		table.foreign('challengerId').references('userId').inTable('users')
-		table.foreign('challengedId').references('userId').inTable('users')
+		table.foreign(['challengerId', 'guildId']).references(['userId', 'guildId']).inTable('users')
+			.onDelete('CASCADE')
+		table.foreign(['challengedId', 'guildId']).references(['userId', 'guildId']).inTable('users')
+			.onDelete('CASCADE')
 	})
 };
 
