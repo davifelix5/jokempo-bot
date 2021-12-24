@@ -75,9 +75,9 @@
  
 ## Todo List 📝
 
-- [ ] Isolar a lógica de registro para um comando separado
-- [ ] Tornar a foreign key do usuário composta a fim de suportar o registro de um mesmo usuário em diferentes servidores
-- [ ] Consertar o erro foreign key quando um usuário tenta cancelar seu registro
+- [x] Isolar a lógica de registro para um comando separado
+- [x] Tornar a foreign key do usuário composta a fim de suportar o registro de um mesmo usuário em diferentes servidores
+- [x] Consertar o erro foreign key quando um usuário tenta cancelar seu registro
 - [ ] Abstrair a lógica paginação
 
 <h2 id="contribuir">Como contribuir 🤝</h2>
