@@ -33,7 +33,7 @@
 
 ## Rodar no seu servidor ⚙️
 
-- Entre nesse link de convite: [Convide o Bot para ser servidor](https://discord.com/oauth2/authorize?client_id=806475125959688213&permissions=413592398912&scope=bot)
+- Entre nesse link de convite: [Convide o Bot para seu servidor](https://discord.com/oauth2/authorize?client_id=806475125959688213&permissions=413592398912&scope=bot)
 - Selecione o servidor no qual deseja utilizar o bot
 - Digita `.help` para começar a jogar
 
